@@ -38,7 +38,7 @@ struct parser_data {
 struct parser_data *parser_parse(const char *data);
 
 /**
-* Deallocate the parser_data in `p`.
+* Deallocate the parser_data in `pdata`.
 * @param pdata `parser_data` struct to free
 */
 void parser_free_data(struct parser_data *pdata);
