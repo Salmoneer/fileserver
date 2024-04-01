@@ -1,5 +1,4 @@
-#include "logger.h"
-#include "parser.h"
+#include "response.h"
 #include "server.h"
 
 #include <stdio.h>
@@ -15,19 +14,11 @@ int main() {
 
     char *data = server_read(conn);
 
-    struct parser_data *pdata = parser_parse(data);
+    struct response_data *rdata = response_new(data);
 
-    for (int i = 0; i < pdata->nheaders; i++) {
-        printf("%s = %s\n", pdata->header_names[i], pdata->header_values[i]);
-    }
-
-    parser_free_data(pdata);
+    response_free(rdata);
 
     free(data);
-
-    // char *response = "HTTP/1.1 200\r\ncontent-type: text/html; charset=utf-8\r\ncontent-length: 0";
-
-    // write(conn, response, strlen(response));
 
     close(conn);
     close(sockfd);
