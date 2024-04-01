@@ -1,4 +1,5 @@
 CPPFLAGS = -std=c99 -g -O0 -Wall -Wextra -Wpedantic
+LDFLAGS  = -lm
 
 BUILD_DIR = build
 BUILD_GUARD = mkdir -p $(BUILD_DIR)
@@ -21,7 +22,6 @@ $(BUILD_DIR)/%.o: src/%.c
 
 clean:
 	rm -r $(BUILD_DIR)
-	rm $(TARGET)
 
 run: $(TARGET)
 	./$(TARGET)
