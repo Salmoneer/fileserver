@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// TODO: Refactor this function to a series of calls to simpler functions
+// TODO: Write a function to convert response_data to string
 struct response_data *response_new(const char *data) {
     struct parser_data *pdata = parser_parse(data);
 
