@@ -27,10 +27,11 @@ char *read_file(const char *filename) {
     int read_size = fread(buffer, 1, length, f);
     buffer[length] = '\0';
 
+    fclose(f);
+
     if (length != read_size) {
         logger_log(LOGGER_WARNING, "FILES", "Failed to read file");
         free(buffer);
-        fclose(f);
         return NULL;
     }
 
