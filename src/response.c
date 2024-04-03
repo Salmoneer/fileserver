@@ -16,13 +16,7 @@ struct response_data *response_new(const char *data) {
         exit(EXIT_FAILURE);
     }
 
-    char *path = pdata->path;
-
-    if (strcmp(path, "/") == 0) {
-        path = "./index.html";
-    }
-
-    rdata->body = read_file(sanitise_path(path));
+    rdata->body = read_file(sanitise_path(pdata->path));
 
     if (rdata->body == NULL) {
         logger_log(LOGGER_WARNING, "RESPONSE", "Sending 404");
@@ -45,6 +39,7 @@ struct response_data *response_new(const char *data) {
         ctype = CONTENT_CSS;
     } else {
         logger_log(LOGGER_ERROR, "RESPONSE", "Failed to detect content type from file extension, assuming html");
+        puts(pdata->path + i);
         ctype = CONTENT_HTML;
     }
 

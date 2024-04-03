@@ -1,6 +1,8 @@
+#include "logger.h"
 #include "response.h"
 #include "server.h"
 
+#include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,6 +13,7 @@
 int sockfd;
 
 void cleanup() {
+    logger_log(LOGGER_INFO, "SERVER", "Shutting down");
     shutdown(sockfd, SHUT_RDWR);
     close(sockfd);
 }
@@ -19,6 +22,7 @@ int main() {
     sockfd = server_init(8069);
 
     atexit(cleanup);
+    signal(SIGINT, exit);
 
     while (1) {
         int conn = accept(sockfd, NULL, NULL);

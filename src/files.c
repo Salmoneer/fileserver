@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-char *read_file(const char *filename) {
+char *read_file(char * __restrict filename) {
     FILE *f = fopen(filename, "r");
+
+    free(filename);
 
     if (f == NULL) {
         logger_log(LOGGER_WARNING, "FILES", "Failed to open file");
@@ -39,6 +42,24 @@ char *read_file(const char *filename) {
 }
 
 // TODO: Implement path sanitisation
-char *sanitise_path(const char *path) {
-    return path;
+char *sanitise_path(char *path) {
+    char *prefix = "./content";
+
+    if (strcmp(path, "/") == 0) {
+        path = "/index.html";
+    }
+
+    char *out = malloc(strlen(prefix) + strlen(path) + 1);
+
+    if (out == NULL) {
+        logger_log(LOGGER_CRITICAL, "FILES", "Failed to allocate corrected path");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(out, prefix);
+    strcat(out, path);
+
+    puts(out);
+
+    return out;
 }
